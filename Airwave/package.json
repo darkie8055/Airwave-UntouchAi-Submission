@@ -1,0 +1,25 @@
+{
+  "name": "airwave-youtube-gestures",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local-first hand gesture controls for YouTube — Chrome Manifest V3 extension",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "setup": "node scripts/download-model.mjs && npm run build",
+    "build": "node scripts/build.mjs",
+    "test": "node scripts/test.mjs",
+    "test:browser": "node tests/browser.mjs",
+    "check": "npm test && npm run build && npm run test:browser"
+  },
+  "dependencies": {
+    "@mediapipe/tasks-vision": "0.10.32"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.12",
+    "jsdom": "26.1.0",
+    "playwright": "1.58.2"
+  }
+}

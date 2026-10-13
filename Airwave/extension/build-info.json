@@ -1,0 +1,7 @@
+{
+  "name": "Airwave",
+  "version": "1.0.0",
+  "model": "Google MediaPipe Gesture Recognizer, float16, version 1",
+  "modelSha256": "97952348cf6a6a4915c2ea1496b4b37ebabc50cbbf80571435643c455f2b0482",
+  "mediapipe": "0.10.32"
+}

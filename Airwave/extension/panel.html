@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Airwave — Your hands. Your remote.</title><link rel="stylesheet" href="panel.css"><script type="module" src="panel.js"></script></head>
+<body>
+  <main class="app">
+    <header class="brand-row"><div class="brand"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 18c3 0 3-8 6-8s3 14 6 14 3-16 6-16 3 10 5 10"/></svg></span><span>airwave<span class="brand-dot">.</span></span></div><span id="camera-status" class="status-pill"><i></i>Camera off</span></header>
+    <div class="intro"><p class="eyebrow">YOUR HANDS. YOUR REMOTE.</p><h1>Less clicking.<br><span>More watching.</span></h1><p>YouTube, with a little wave.</p></div>
+    <nav class="tabs" aria-label="Airwave sections" role="tablist"><button id="tab-control" role="tab" aria-selected="true" aria-controls="view-control" data-tab="control">Control</button><button id="tab-guide" role="tab" aria-selected="false" aria-controls="view-guide" data-tab="guide" tabindex="-1">Gesture guide</button><button id="tab-settings" role="tab" aria-selected="false" aria-controls="view-settings" data-tab="settings" tabindex="-1">Settings</button></nav>
+
+    <section id="view-control" class="view" role="tabpanel" aria-labelledby="tab-control">
+      <div class="section-heading"><label for="target-tab">CONNECTED TAB</label><button class="text-button" id="refresh-tabs" title="Refresh YouTube tabs">Refresh ↻</button></div>
+      <div class="target-wrap"><span class="youtube-mark" aria-hidden="true">▶</span><select id="target-tab" aria-label="YouTube tab to control"><option value="">Open YouTube to connect</option></select></div>
+      <p id="target-status" class="helper">Open a YouTube tab, then refresh this list.</p>
+
+      <div class="camera" id="camera-frame">
+        <video id="camera-video" autoplay muted playsinline aria-label="Live webcam preview"></video><canvas id="landmarks" aria-hidden="true"></canvas>
+        <div class="camera-empty" id="camera-empty"><svg class="hand-art" viewBox="0 0 140 120" aria-hidden="true"><circle cx="70" cy="60" r="49" class="orbit"/><circle cx="70" cy="60" r="37" class="orbit inner"/><path class="hand" d="M49 78 37 62q-5-9 2-12 5-2 10 6l4 5V28q0-10 8-10 6 0 6 10v23-34q0-9 7-9t7 9v34-26q0-9 7-9t7 9v31-17q0-8 7-8t7 8v32q0 30-28 32H73q-14 0-24-25Z"/><path class="spark" d="m21 30 0 10m-5-5h10m87-20v10m-5-5h10"/><circle cx="24" cy="87" r="3" class="spark-dot"/></svg><strong>A little wave goes a long way.</strong><span>Your camera starts when you choose.</span></div>
+        <div class="camera-top"><span id="preview-badge">PREVIEW</span><span class="private-badge">◈ Local only</span></div>
+        <div id="camera-live-bottom" class="camera-live-bottom" hidden><span id="hand-indicator">Looking for a hand</span><span id="fps">— fps</span></div>
+      </div>
+      <div class="recognition"><div><span class="small-label">GESTURE</span><strong id="gesture-label" aria-live="polite">Ready when you are</strong></div><span id="confidence-label">—</span></div>
+      <div class="progress-track" role="progressbar" aria-label="Gesture hold progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="gesture-progress"></div></div>
+      <button id="start-stop" class="primary-button"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="3"/><path d="m16 10 5-3v10l-5-3"/></svg><span>Start camera</span></button>
+      <div class="camera-actions"><button id="pause-gestures" class="text-button" hidden>Pause gestures</button><button id="camera-setup" class="text-button">Camera setup ↗</button><span id="inference" class="helper">No recording. No uploads.</span></div>
+      <div id="error-box" class="message error" role="alert" hidden></div>
+      <div id="practice-note" class="message" hidden>Practice mode is on. Gestures and buttons are previewed without changing YouTube.</div>
+
+      <div class="player-card"><div class="player-header"><span class="small-label">ON YOUTUBE</span><span id="playback-rate" class="speed-badge">1×</span></div><p id="video-title">Your next rabbit hole awaits.</p><div class="player-meta"><span id="playback-status">No video connected</span><span id="video-time">—</span></div></div>
+      <div class="transport"><button data-action="seek_backward" title="Skip backward"><span class="transport-icon">↶</span><small id="back-label">10 sec</small></button><button data-action="toggle_play" class="play-button" id="play-button"><span class="transport-icon">▶</span><small>Play / pause</small></button><button data-action="seek_forward" title="Skip forward"><span class="transport-icon">↷</span><small id="forward-label">10 sec</small></button></div>
+      <div class="control-grid"><button data-action="toggle_mute"><span>♫</span><small id="mute-label">Mute / unmute</small></button><button data-action="speed_down"><span>−</span><small>Slower</small></button><button data-action="speed_up"><span>+</span><small>Faster</small></button><button data-action="browse_previous"><span>↑</span><small>Scroll up</small></button><button data-action="browse_next"><span>↓</span><small>Scroll down</small></button></div>
+      <div class="section-heading activity-heading"><span>LAST ACTION</span><span id="action-count">0 this session</span></div><div class="last-action" role="status"><span class="action-dot"></span><span id="last-action">Try a gesture or a control above.</span></div>
+    </section>
+
+    <section id="view-guide" class="view" role="tabpanel" aria-labelledby="tab-guide" hidden>
+      <div class="section-heading"><span>A SMALL GESTURE. A BIG DIFFERENCE.</span><span>09 actions</span></div>
+      <p class="guide-intro">Face your palm toward the camera. Use one hand, keep it fully in frame, and hold until the bar fills.</p>
+      <div class="gesture-list">
+        <article class="gesture-card"><span class="gesture-emoji" aria-hidden="true">✋</span><div><h2>Open palm</h2><p>Play video</p></div><span class="gesture-type">HOLD</span></article>
+        <article class="gesture-card"><span class="gesture-emoji" aria-hidden="true">✊</span><div><h2>Closed fist</h2><p>Pause video</p></div><span class="gesture-type">HOLD</span></article>
+        <article class="gesture-card"><span class="gesture-emoji" aria-hidden="true">✌️</span><div><h2>Peace sign</h2><p>Mute / unmute</p></div><span class="gesture-type">HOLD</span></article>
+        <article class="gesture-card"><span class="gesture-emoji" aria-hidden="true">👍</span><div><h2>Thumbs up</h2><p>Faster by 0.25×</p></div><span class="gesture-type">HOLD</span></article>
+        <article class="gesture-card"><span class="gesture-emoji" aria-hidden="true">👎</span><div><h2>Thumbs down</h2><p>Slower by 0.25×</p></div><span class="gesture-type">HOLD</span></article>
+      </div>
+      <div class="swipe-title"><span aria-hidden="true">☝️</span><div><h2>Point, then swipe</h2><p>Keep only your index finger raised.</p></div></div>
+      <div class="swipe-grid"><div><b>←</b><strong>Skip backward</strong><small class="seek-value">10 seconds</small></div><div><b>→</b><strong>Skip forward</strong><small class="seek-value">10 seconds</small></div><div><b>↑</b><strong>Scroll down</strong><small>Next YouTube Short</small></div><div><b>↓</b><strong>Scroll up</strong><small>Previous YouTube Short</small></div></div>
+      <div class="tip"><span>✦</span><p><strong>Make a gesture. Then relax.</strong><br>Lower your hand briefly before repeating. Move in the direction you see in the preview. Try Practice mode in Settings first.</p></div>
+    </section>
+
+    <section id="view-settings" class="view" role="tabpanel" aria-labelledby="tab-settings" hidden>
+      <div class="section-heading"><span>MAKE IT FEEL NATURAL</span><button class="text-button" id="reset-settings">Reset</button></div>
+      <div class="setting"><label for="confidence">Recognition confidence <output id="confidence-output">65%</output></label><input id="confidence" type="range" min="50" max="90" step="5"><p>Raise this if gestures trigger too easily.</p></div>
+      <div class="setting"><label for="holdMs">Hold duration <output id="holdMs-output">550 ms</output></label><input id="holdMs" type="range" min="300" max="1200" step="50"><p>A longer hold helps prevent accidental actions.</p></div>
+      <div class="setting"><label for="cooldownMs">Time between actions <output id="cooldownMs-output">1.0 s</output></label><input id="cooldownMs" type="range" min="600" max="2500" step="100"><p>One held gesture always fires only once.</p></div>
+      <div class="setting"><label for="swipeDistance">Swipe distance <output id="swipeDistance-output">16%</output></label><input id="swipeDistance" type="range" min="9" max="30" step="1"><p>Percentage of the camera frame to move your hand.</p></div>
+      <div class="setting select-setting"><label for="seekSeconds">Skip amount</label><select id="seekSeconds"><option value="5">5 seconds</option><option value="10">10 seconds</option><option value="15">15 seconds</option><option value="30">30 seconds</option></select></div>
+      <div class="setting"><label for="deviceId">Camera</label><select id="deviceId"><option value="">Default camera</option></select><p>Camera names appear after you allow access. Stop the camera before changing it.</p></div>
+      <label class="toggle-setting"><span><strong>Mirror preview</strong><small>Move naturally, like looking in a mirror.</small></span><input id="mirror" type="checkbox" role="switch"></label>
+      <label class="toggle-setting"><span><strong>Hand landmarks</strong><small>See what the tracker sees.</small></span><input id="showSkeleton" type="checkbox" role="switch"></label>
+      <label class="toggle-setting"><span><strong>Practice mode</strong><small>Try gestures without changing YouTube.</small></span><input id="practice" type="checkbox" role="switch"></label>
+      <div class="privacy-card"><span>◈</span><h2>Private by design.</h2><p>Video is processed on this device. Airwave does not record, store, or upload camera frames. Only your preferences are saved locally.</p><p>Closing the panel stops the camera. Gestures only control the selected, active YouTube tab.</p></div>
+      <p class="version">AIRWAVE 1.0 · BUILT FOR HANDS-FREE WATCHING</p>
+    </section>
+    <footer><span class="footer-wave">〰</span><span>A little less touch. A little more flow.</span><a href="https://www.youtube.com/" target="_blank" rel="noreferrer" title="Open YouTube">YouTube ↗</a></footer>
+  </main>
+</body>
+</html>
